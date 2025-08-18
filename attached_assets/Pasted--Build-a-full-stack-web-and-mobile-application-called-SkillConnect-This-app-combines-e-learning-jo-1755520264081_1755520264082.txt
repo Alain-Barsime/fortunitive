@@ -1,0 +1,119 @@
+"Build a full-stack web and mobile application called SkillConnect. This app combines e-learning, job opportunities, professional networking, and social media features into one platform. The application must include the following modules and functionalities, with clean, scalable, and secure code. Do not omit any feature.
+
+1. User Management & Accounts
+
+User registration and login (email, phone, social login)
+
+User profiles (name, bio, skills, education, experience, profile picture, resume upload)
+
+Followers system (follow/unfollow other users)
+
+Account balances (deposit, withdraw, transaction history)
+
+Roles: Learners, Employers, Instructors, Admins
+
+2. E-Learning Module
+
+Course creation (for instructors) with video uploads, documents, quizzes, assignments
+
+Course enrollment (free or paid)
+
+Progress tracking (completion percentage, certificates)
+
+Course ratings & reviews
+
+Categories & search functionality
+
+3. Jobs & Opportunities
+
+Employers can post job listings (full-time, freelance, internships)
+
+Users can apply for jobs (upload resume or apply with profile)
+
+Job matching (recommend jobs based on skills in user profile)
+
+Employers can manage applicants (accept, reject, shortlist)
+
+Freelance gigs and contract jobs with payment integration
+
+4. Social Networking & Community
+
+News feed (users can post text, images, videos, links)
+
+Like, comment, and share posts
+
+Direct messaging (one-to-one chat + group chat)
+
+Notifications (real-time for messages, job offers, course updates, followers)
+
+Trending posts and hashtags
+
+5. Job & Service Marketplace
+
+Users can offer services (freelance gigs)
+
+Employers can directly hire users for services
+
+Secure in-app payments (escrow system optional)
+
+Reviews & ratings for employers and freelancers
+
+6. Wallet & Payments
+
+Each user has an account balance
+
+Wallet supports deposits, withdrawals, and in-app purchases (e.g., buying courses)
+
+Secure payment gateways (PayPal, Stripe, Mobile Money integration)
+
+Transaction history
+
+7. Admin Dashboard
+
+Manage users, courses, and jobs
+
+Moderate posts and reported content
+
+Manage payments and transactions
+
+Analytics (active users, revenue, top courses, job applications)
+
+8. Tech & Architecture Requirements
+
+Frontend: React (for web), React Native/Flutter (for mobile)
+
+Backend: Node.js (Express) or Laravel
+
+Database: PostgreSQL or MySQL
+
+Real-time Features: WebSockets (Socket.IO) for chat and notifications
+
+Cloud Storage: AWS S3 / Firebase for course materials & media uploads
+
+Authentication: JWT-based auth + OAuth for social logins
+
+Security: Input validation, hashed passwords, role-based access control
+
+Scalability: Microservices-friendly architecture
+
+9. UI/UX Requirements
+
+Clean, modern, mobile-first design
+
+Dashboard for users (courses, jobs, posts, wallet overview)
+
+Dark mode + light mode option
+
+Accessibility-friendly design
+
+10. Extra Features
+
+Search & filter across courses, jobs, posts, and users
+
+AI-powered course and job recommendations
+
+Push notifications for mobile
+
+API documentation for integrations
+
+Deliver the complete source code with frontend, backend, database schema, and deployment setup (Docker or cloud deployment scripts). Include seed data for testing (sample users, jobs, courses, posts). Ensure all features above are implemented without skipping any."
