@@ -37,7 +37,7 @@ export function Sidebar() {
   if (!user) return null;
 
   return (
-    <aside className="hidden lg:block w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen">
+    <aside className="hidden lg:block w-64 bg-background border-r border-border min-h-screen">
       <div className="p-6">
         {/* User Profile Quick View */}
         <div className="mb-8">
@@ -49,10 +49,10 @@ export function Sidebar() {
             />
             <div className="ml-3">
               <p className="font-semibold">{user.firstName} {user.lastName}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-400 capitalize">{user.role}</p>
+              <p className="text-sm text-muted-foreground capitalize">{user.role}</p>
             </div>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+          <div className="bg-secondary rounded-lg p-3">
             <div className="flex items-center justify-between text-sm">
               <span>Wallet Balance</span>
               <span className="font-semibold text-accent">${user.walletBalance || "0.00"}</span>
@@ -70,8 +70,8 @@ export function Sidebar() {
               <Link key={item.name} href={item.href}>
                 <div className={`flex items-center px-3 py-2 rounded-lg font-medium transition-colors ${
                   isActive
-                    ? "text-primary bg-blue-50 dark:bg-blue-900/20"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    ? "text-primary bg-secondary"
+                    : "text-foreground hover:bg-secondary"
                 }`}>
                   <Icon className="w-5 h-5" />
                   <span className="ml-3">{item.name}</span>

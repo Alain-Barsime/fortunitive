@@ -8,6 +8,8 @@ SkillConnect is a comprehensive full-stack social learning platform that combine
 
 Preferred communication style: Simple, everyday language.
 
+Design preferences: Clean white and blue color scheme with no overriding of elements. Uses semantic color variables (background, foreground, primary, secondary, muted, etc.) for consistent theming.
+
 ## System Architecture
 
 ### Frontend Architecture

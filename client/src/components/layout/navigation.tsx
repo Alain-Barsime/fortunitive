@@ -20,7 +20,7 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <nav className="bg-background shadow-sm border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -43,9 +43,9 @@ export function Navigation() {
                 placeholder="Search courses, jobs, people..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="pl-10 pr-4 py-2 w-full bg-input border-border focus:ring-2 focus:ring-primary focus:border-transparent"
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             </form>
           </div>
 
@@ -54,7 +54,7 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="sm"
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary"
+              className="p-2 text-muted-foreground hover:text-primary"
             >
               <Bell className="h-5 w-5" />
               <span className="absolute -mt-6 ml-2 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -63,7 +63,7 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="sm"
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary"
+              className="p-2 text-muted-foreground hover:text-primary"
             >
               <MessageCircle className="h-5 w-5" />
             </Button>
@@ -73,7 +73,7 @@ export function Navigation() {
               variant="ghost"
               size="sm"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary"
+              className="p-2 text-muted-foreground hover:text-primary"
             >
               <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />

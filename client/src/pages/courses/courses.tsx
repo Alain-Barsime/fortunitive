@@ -76,13 +76,13 @@ export default function Courses() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <Card key={i} className="animate-pulse">
-                  <div className="w-full h-48 bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="w-full h-48 bg-muted"></div>
                   <CardContent className="p-6">
-                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+                    <div className="h-6 bg-muted rounded mb-2"></div>
+                    <div className="h-4 bg-muted rounded mb-4"></div>
                     <div className="flex justify-between">
-                      <div className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                      <div className="h-4 w-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      <div className="h-6 w-16 bg-muted rounded"></div>
+                      <div className="h-4 w-12 bg-muted rounded"></div>
                     </div>
                   </CardContent>
                 </Card>
@@ -100,7 +100,7 @@ export default function Courses() {
                   />
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 line-clamp-2">
+                      <h3 className="font-semibold text-lg text-foreground line-clamp-2">
                         {course.title}
                       </h3>
                       <Badge variant="secondary" className="ml-2 shrink-0">
@@ -108,11 +108,11 @@ export default function Courses() {
                       </Badge>
                     </div>
                     
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
                       {course.description}
                     </p>
 
-                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 mr-1" />
                         {Math.floor((course.duration || 0) / 60)}h {(course.duration || 0) % 60}m
@@ -126,7 +126,7 @@ export default function Courses() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                        <span className="ml-1 text-sm text-gray-600 dark:text-gray-400">
+                        <span className="ml-1 text-sm text-muted-foreground">
                           {course.rating || "4.8"}
                         </span>
                       </div>
