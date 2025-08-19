@@ -50,31 +50,34 @@ export function ActivityFeed() {
       <h2 className="text-xl font-semibold text-foreground mb-6">Recent Activity</h2>
 
       <div className="space-y-6">
-        {posts.slice(0, 2).map((item) => {
+        {posts.slice(0, 2).map((item, index) => {
           // Guard against missing data
-          if (!item.posts || !item.users) {
+          if (!item?.posts?.id || !item?.users?.id) {
             return null;
           }
           
           return (
             <div key={item.posts.id} className="flex items-start space-x-3">
               <img
-                src={item.users.profilePicture || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100"}
-                alt={`${item.users.firstName || 'User'} avatar`}
+                src={item.users?.profilePicture || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100"}
+                alt={`${item.users?.firstName || 'User'} avatar`}
                 className="w-10 h-10 rounded-full"
+                onError={(e) => {
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100";
+                }}
               />
               <div className="flex-1">
                 <div className="bg-card rounded-lg p-4 border">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-foreground">
-                      {item.users.firstName || ''} {item.users.lastName || ''}
+                      {item.users?.firstName || ''} {item.users?.lastName || ''}
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {new Date(item.posts.createdAt).toLocaleDateString()}
+                      {item.posts?.createdAt ? new Date(item.posts.createdAt).toLocaleDateString() : 'Unknown date'}
                     </span>
                   </div>
-                  <p className="text-foreground">{item.posts.content}</p>
-                  {item.posts.mediaUrl && (
+                  <p className="text-foreground">{item.posts?.content || ''}</p>
+                  {item.posts?.mediaUrl && (
                     <img
                       src={item.posts.mediaUrl}
                       alt="Post media"
@@ -88,7 +91,7 @@ export function ActivityFeed() {
                       className="flex items-center text-muted-foreground hover:text-primary"
                     >
                       <Heart className="h-4 w-4 mr-1" />
-                      <span className="text-sm">{item.posts.likesCount || 0}</span>
+                      <span className="text-sm">{item.posts?.likesCount || 0}</span>
                     </Button>
                     <Button
                       variant="ghost"
@@ -96,7 +99,7 @@ export function ActivityFeed() {
                       className="flex items-center text-muted-foreground hover:text-primary"
                     >
                       <MessageCircle className="h-4 w-4 mr-1" />
-                      <span className="text-sm">{item.posts.commentsCount || 0}</span>
+                      <span className="text-sm">{item.posts?.commentsCount || 0}</span>
                     </Button>
                     <Button
                       variant="ghost"
