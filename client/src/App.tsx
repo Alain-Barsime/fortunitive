@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { AuthProvider } from "@/hooks/use-auth";
+import { ProtectedRoute } from "@/components/auth/protected-route";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/auth/login";
@@ -18,14 +19,38 @@ import Messages from "@/pages/messages/messages";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/courses" component={Courses} />
-      <Route path="/courses/:id" component={CourseDetail} />
-      <Route path="/jobs" component={Jobs} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/messages" component={Messages} />
+      <Route path="/">
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/courses">
+        <ProtectedRoute>
+          <Courses />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/courses/:id">
+        <ProtectedRoute>
+          <CourseDetail />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/jobs">
+        <ProtectedRoute>
+          <Jobs />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/profile">
+        <ProtectedRoute>
+          <Profile />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/messages">
+        <ProtectedRoute>
+          <Messages />
+        </ProtectedRoute>
+      </Route>
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

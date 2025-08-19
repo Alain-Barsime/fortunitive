@@ -1,15 +1,15 @@
+import { useState } from "react";
 import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/use-auth";
 import { insertUserSchema } from "@shared/schema";
 
 const registerSchema = insertUserSchema.extend({
@@ -24,6 +24,8 @@ type RegisterForm = z.infer<typeof registerSchema>;
 export default function Register() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { register, user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
@@ -38,34 +40,35 @@ export default function Register() {
     },
   });
 
-  const registerMutation = useMutation({
-    mutationFn: async (data: RegisterForm) => {
+  // Redirect to dashboard if already logged in
+  if (user) {
+    setLocation("/");
+    return null;
+  }
+
+  const onSubmit = async (data: RegisterForm) => {
+    try {
+      setIsLoading(true);
       const { confirmPassword, ...userData } = data;
-      const response = await apiRequest("POST", "/api/auth/register", userData);
-      return response.json();
-    },
-    onSuccess: (data) => {
+      await register(userData);
       toast({
         title: "Welcome to SkillConnect!",
-        description: `Account created successfully for ${data.user.firstName} ${data.user.lastName}`,
+        description: `Account created successfully!`,
       });
       setLocation("/");
-    },
-    onError: (error: any) => {
+    } catch (error: any) {
       toast({
         title: "Registration failed",
         description: error.message || "Please try again.",
         variant: "destructive",
       });
-    },
-  });
-
-  const onSubmit = (data: RegisterForm) => {
-    registerMutation.mutate(data);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center mb-4">
@@ -191,17 +194,17 @@ export default function Register() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={registerMutation.isPending}
+                disabled={isLoading}
               >
-                {registerMutation.isPending ? "Creating account..." : "Create Account"}
+                {isLoading ? "Creating account..." : "Create Account"}
               </Button>
             </form>
           </Form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
-              <a href="/login" className="font-medium text-primary hover:text-blue-800">
+              <a href="/login" className="font-medium text-primary hover:text-primary/80">
                 Sign in
               </a>
             </p>

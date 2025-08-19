@@ -3,13 +3,12 @@ import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/use-auth";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -21,6 +20,8 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function Login() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { login, user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -30,33 +31,34 @@ export default function Login() {
     },
   });
 
-  const loginMutation = useMutation({
-    mutationFn: async (data: LoginForm) => {
-      const response = await apiRequest("POST", "/api/auth/login", data);
-      return response.json();
-    },
-    onSuccess: (data) => {
+  // Redirect to dashboard if already logged in
+  if (user) {
+    setLocation("/");
+    return null;
+  }
+
+  const onSubmit = async (data: LoginForm) => {
+    try {
+      setIsLoading(true);
+      await login(data.email, data.password);
       toast({
         title: "Welcome back!",
-        description: `Logged in as ${data.user.firstName} ${data.user.lastName}`,
+        description: "Successfully logged in to SkillConnect",
       });
       setLocation("/");
-    },
-    onError: (error: any) => {
+    } catch (error: any) {
       toast({
         title: "Login failed",
         description: error.message || "Please check your credentials and try again.",
         variant: "destructive",
       });
-    },
-  });
-
-  const onSubmit = (data: LoginForm) => {
-    loginMutation.mutate(data);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center mb-4">
@@ -65,7 +67,7 @@ export default function Login() {
             </div>
           </div>
           <CardTitle className="text-2xl font-bold">Welcome to SkillConnect</CardTitle>
-          <p className="text-gray-600 dark:text-gray-400">Sign in to your account</p>
+          <p className="text-muted-foreground">Sign in to your account</p>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -109,17 +111,17 @@ export default function Login() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={loginMutation.isPending}
+                disabled={isLoading}
               >
-                {loginMutation.isPending ? "Signing in..." : "Sign In"}
+                {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           </Form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-muted-foreground">
               Don't have an account?{" "}
-              <a href="/register" className="font-medium text-primary hover:text-blue-800">
+              <a href="/register" className="font-medium text-primary hover:text-primary/80">
                 Sign up
               </a>
             </p>
