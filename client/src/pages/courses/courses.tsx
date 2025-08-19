@@ -21,11 +21,11 @@ export default function Courses() {
   const filteredCourses = courses?.filter((course) => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          course.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !selectedCategory || course.category === selectedCategory;
+    const matchesCategory = !selectedCategory || selectedCategory === "all" || course.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const categories = [...new Set(courses?.map(course => course.category) || [])];
+  const categories = Array.from(new Set(courses?.map(course => course.category) || []));
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -61,7 +61,7 @@ export default function Courses() {
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Categories</SelectItem>
+                <SelectItem value="all">All Categories</SelectItem>
                 {categories.map((category) => (
                   <SelectItem key={category} value={category}>
                     {category}
@@ -91,7 +91,8 @@ export default function Courses() {
           ) : filteredCourses && filteredCourses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCourses.map((course) => (
-                <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => window.location.href = `/courses/${course.id}`}>
                   <img
                     src={course.thumbnail || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&h=240"}
                     alt={course.title}
@@ -136,8 +137,14 @@ export default function Courses() {
                       </div>
                     </div>
 
-                    <Button className="w-full mt-4">
-                      Enroll Now
+                    <Button 
+                      className="w-full mt-4"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = `/courses/${course.id}`;
+                      }}
+                    >
+                      View Course
                     </Button>
                   </CardContent>
                 </Card>
@@ -152,7 +159,7 @@ export default function Courses() {
                 className="mt-4"
                 onClick={() => {
                   setSearchTerm("");
-                  setSelectedCategory("");
+                  setSelectedCategory("all");
                 }}
               >
                 Clear Filters

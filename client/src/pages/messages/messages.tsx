@@ -13,6 +13,19 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/use-auth";
 import type { Message, User } from "@shared/schema";
 
+function formatTime(date: Date): string {
+  const now = new Date();
+  const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
+  
+  if (diffInHours < 1) {
+    return "now";
+  } else if (diffInHours < 24) {
+    return `${Math.floor(diffInHours)}h ago`;
+  } else {
+    return date.toLocaleDateString();
+  }
+}
+
 interface MessageWithUsers extends Message {
   sender: User;
   recipient: User;
@@ -41,14 +54,21 @@ export default function Messages() {
         profilePicture: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&h=100",
         email: "mike@example.com",
         username: "mike_j",
-        role: "employer" as any,
+        role: "employer" as const,
+        password: "",
+        bio: null,
+        resumeUrl: null,
+        walletBalance: "0.00",
+        skills: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       lastMessage: {
         id: "1",
         content: "Thanks for applying! I'd like to schedule an interview.",
         senderId: "1",
         recipientId: user?.id || "",
-        createdAt: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+        createdAt: new Date(Date.now() - 2 * 60 * 1000),
         isRead: false,
       },
       unreadCount: 1,
@@ -61,14 +81,21 @@ export default function Messages() {
         profilePicture: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=100&h=100",
         email: "sarah@example.com",
         username: "dr_sarah",
-        role: "instructor" as any,
+        role: "instructor" as const,
+        password: "",
+        bio: null,
+        resumeUrl: null,
+        walletBalance: "0.00",
+        skills: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       lastMessage: {
         id: "2",
         content: "Great work on your assignment! Your solution was very creative.",
         senderId: "2",
         recipientId: user?.id || "",
-        createdAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+        createdAt: new Date(Date.now() - 60 * 60 * 1000),
         isRead: true,
       },
       unreadCount: 0,
@@ -81,14 +108,21 @@ export default function Messages() {
         profilePicture: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&h=100",
         email: "emily@example.com",
         username: "emily_r",
-        role: "learner" as any,
+        role: "learner" as const,
+        password: "",
+        bio: null,
+        resumeUrl: null,
+        walletBalance: "0.00",
+        skills: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       lastMessage: {
         id: "3",
         content: "Would love to connect and discuss the React course!",
         senderId: "3",
         recipientId: user?.id || "",
-        createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+        createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000),
         isRead: true,
       },
       unreadCount: 0,
@@ -102,7 +136,7 @@ export default function Messages() {
       senderId: selectedConversation,
       recipientId: user?.id || "",
       content: "Hi there! I saw your profile and I'm impressed with your skills.",
-      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
       isRead: true,
     },
     {
@@ -110,7 +144,7 @@ export default function Messages() {
       senderId: user?.id || "",
       recipientId: selectedConversation,
       content: "Thank you! I'd be happy to discuss potential opportunities.",
-      createdAt: new Date(Date.now() - 23 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(Date.now() - 23 * 60 * 60 * 1000),
       isRead: true,
     },
     {
@@ -118,7 +152,7 @@ export default function Messages() {
       senderId: selectedConversation,
       recipientId: user?.id || "",
       content: mockConversations.find(c => c.user.id === selectedConversation)?.lastMessage.content || "Great! Let's schedule a time to chat.",
-      createdAt: mockConversations.find(c => c.user.id === selectedConversation)?.lastMessage.createdAt || new Date().toISOString(),
+      createdAt: mockConversations.find(c => c.user.id === selectedConversation)?.lastMessage.createdAt || new Date(),
       isRead: false,
     },
   ] : [];
@@ -154,19 +188,7 @@ export default function Messages() {
     }
   };
 
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-    
-    if (diffInMinutes < 60) {
-      return `${diffInMinutes}m ago`;
-    } else if (diffInMinutes < 1440) {
-      return `${Math.floor(diffInMinutes / 60)}h ago`;
-    } else {
-      return date.toLocaleDateString();
-    }
-  };
+
 
   const selectedUser = mockConversations.find(c => c.user.id === selectedConversation)?.user;
 

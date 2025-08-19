@@ -12,7 +12,7 @@ import type { Course } from "@shared/schema";
 
 export default function CourseDetail() {
   const params = useParams();
-  const courseId = params.id;
+  const courseId = params.id as string;
   const { toast } = useToast();
 
   const { data: course, isLoading } = useQuery<Course>({

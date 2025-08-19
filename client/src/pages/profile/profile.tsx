@@ -311,7 +311,7 @@ export default function Profile() {
                     <CardTitle>Enrolled Courses</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {enrolledCourses && enrolledCourses.length > 0 ? (
+                    {enrolledCourses && Array.isArray(enrolledCourses) && enrolledCourses.length > 0 ? (
                       <div className="space-y-4">
                         {enrolledCourses.map((enrollment: any) => (
                           <div key={enrollment.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -352,7 +352,7 @@ export default function Profile() {
                     <CardTitle>Job Applications</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {jobApplications && jobApplications.length > 0 ? (
+                    {jobApplications && Array.isArray(jobApplications) && jobApplications.length > 0 ? (
                       <div className="space-y-4">
                         {jobApplications.map((application: any) => (
                           <div key={application.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">

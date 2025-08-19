@@ -54,7 +54,7 @@ export default function Jobs() {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          job.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = !selectedType || job.type === selectedType;
+    const matchesType = !selectedType || selectedType === "all" || job.type === selectedType;
     return matchesSearch && matchesType;
   });
 
@@ -110,7 +110,7 @@ export default function Jobs() {
                 <SelectValue placeholder="Job Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="full-time">Full-time</SelectItem>
                 <SelectItem value="part-time">Part-time</SelectItem>
                 <SelectItem value="contract">Contract</SelectItem>
