@@ -59,15 +59,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 px-4">
+      <Card className="w-full max-w-md glass-card bg-card floating-element">
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center mb-4">
             <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
               <i className="fas fa-graduation-cap text-white text-lg"></i>
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Welcome to Fortunitive</CardTitle>
+          <CardTitle className="text-2xl font-bold gradient-text">Welcome to Fortunitive</CardTitle>
           <p className="text-muted-foreground">Sign in to your account</p>
         </CardHeader>
         <CardContent>

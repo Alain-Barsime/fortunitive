@@ -16,7 +16,7 @@ const recentMessages = [
       lastName: "Johnson",
       profilePicture: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&h=100",
     },
-    content: "Thanks for applying! I'd like to schedule...",
+    content: "Thanks for applying! I'd like to sche...",
     createdAt: new Date(Date.now() - 2 * 60 * 1000).toISOString(), // 2 minutes ago
   },
   {
@@ -27,7 +27,7 @@ const recentMessages = [
       lastName: "Anderson",
       profilePicture: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=100&h=100",
     },
-    content: "Great work on your assignment! Your...",
+    content: "Great work on your assignment! You...",
     createdAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(), // 1 hour ago
   },
 ];
@@ -48,9 +48,9 @@ export function RecentMessages() {
   };
 
   return (
-    <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <section className="bg-card glass-card rounded-xl shadow-sm border p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Messages</h2>
+        <h2 className="text-lg font-semibold text-foreground">Recent Messages</h2>
         <a href="/messages" className="text-primary hover:text-blue-800 text-sm">
           View All
         </a>
@@ -60,7 +60,7 @@ export function RecentMessages() {
         {recentMessages.map((message) => (
           <div
             key={message.id}
-            className="flex items-center p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer"
+            className="flex items-center p-3 hover:bg-secondary rounded-lg cursor-pointer transition-colors"
           >
             <img
               src={message.sender.profilePicture || ""}
@@ -69,14 +69,14 @@ export function RecentMessages() {
             />
             <div className="ml-3 flex-1">
               <div className="flex items-center justify-between">
-                <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
+                <p className="font-medium text-foreground text-sm">
                   {message.sender.firstName} {message.sender.lastName}
                 </p>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-muted-foreground">
                   {formatTime(message.createdAt)}
                 </span>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
+              <p className="text-sm text-muted-foreground truncate">
                 {message.content}
               </p>
             </div>

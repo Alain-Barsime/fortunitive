@@ -9,9 +9,9 @@ export function FeaturedCourses() {
 
   if (isLoading) {
     return (
-      <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <section className="bg-card glass-card rounded-xl shadow-sm border p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Featured Courses</h2>
+          <h2 className="text-lg font-semibold text-foreground">Featured Courses</h2>
         </div>
         <div className="space-y-4">
           {[1, 2].map((i) => (
@@ -34,9 +34,9 @@ export function FeaturedCourses() {
 
   if (!courses || courses.length === 0) {
     return (
-      <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <section className="bg-card glass-card rounded-xl shadow-sm border p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Featured Courses</h2>
+          <h2 className="text-lg font-semibold text-foreground">Featured Courses</h2>
         </div>
         <div className="text-center py-8">
           <p className="text-gray-500 dark:text-gray-400">No featured courses available</p>
@@ -46,9 +46,9 @@ export function FeaturedCourses() {
   }
 
   return (
-    <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <section className="bg-card glass-card rounded-xl shadow-sm border p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Featured Courses</h2>
+        <h2 className="text-lg font-semibold text-foreground">Featured Courses</h2>
         <a href="/courses" className="text-primary hover:text-blue-800 text-sm">
           View All
         </a>

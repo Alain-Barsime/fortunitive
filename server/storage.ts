@@ -237,7 +237,7 @@ export class DatabaseStorage implements IStorage {
           and(eq(messages.senderId, otherUserId), eq(messages.recipientId, userId))
         )
       )
-      .orderBy(desc(messages.createdAt));
+      .orderBy(messages.createdAt); // Oldest first for chat display
   }
 
   async sendMessage(insertMessage: InsertMessage): Promise<Message> {
@@ -248,15 +248,49 @@ export class DatabaseStorage implements IStorage {
     return message;
   }
 
-  async getRecentConversations(userId: string): Promise<(Message & { sender: User, recipient: User })[]> {
-    return await db
-      .select()
-      .from(messages)
-      .innerJoin(users, eq(messages.senderId, users.id))
-      .innerJoin(sql`users as recipients`, eq(messages.recipientId, sql`recipients.id`))
-      .where(or(eq(messages.senderId, userId), eq(messages.recipientId, userId)))
-      .orderBy(desc(messages.createdAt))
-      .limit(10);
+  async getRecentConversations(userId: string): Promise<any[]> {
+    // Get the most recent message for each unique conversation partner
+    const conversations = await db.execute(sql`
+      WITH ranked_messages AS (
+        SELECT 
+          m.*,
+          CASE 
+            WHEN m.sender_id = ${userId} THEN m.recipient_id 
+            ELSE m.sender_id 
+          END as other_user_id,
+          ROW_NUMBER() OVER (
+            PARTITION BY CASE 
+              WHEN m.sender_id = ${userId} THEN m.recipient_id 
+              ELSE m.sender_id 
+            END 
+            ORDER BY m.created_at DESC
+          ) as rn
+        FROM messages m
+        WHERE m.sender_id = ${userId} OR m.recipient_id = ${userId}
+      )
+      SELECT 
+        rm.*,
+        u.id as user_id,
+        u.first_name,
+        u.last_name,
+        u.username,
+        u.profile_picture,
+        u.role,
+        (
+          SELECT COUNT(*)
+          FROM messages m2 
+          WHERE m2.sender_id = rm.other_user_id 
+            AND m2.recipient_id = ${userId} 
+            AND m2.is_read = false
+        ) as unread_count
+      FROM ranked_messages rm
+      JOIN users u ON u.id = rm.other_user_id
+      WHERE rm.rn = 1
+      ORDER BY rm.created_at DESC
+      LIMIT 10
+    `);
+    
+    return conversations.rows;
   }
 
   async createTransaction(transaction: Omit<Transaction, 'id' | 'createdAt'>): Promise<Transaction> {

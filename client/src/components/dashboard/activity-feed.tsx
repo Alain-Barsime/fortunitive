@@ -15,7 +15,7 @@ export function ActivityFeed() {
 
   if (isLoading) {
     return (
-      <section className="bg-card rounded-xl shadow-sm border p-6">
+      <section className="bg-card glass-card rounded-xl shadow-sm border p-6">
         <h2 className="text-xl font-semibold text-foreground mb-6">Recent Activity</h2>
         <div className="space-y-6">
           {[1, 2].map((i) => (
@@ -36,7 +36,7 @@ export function ActivityFeed() {
 
   if (!posts || posts.length === 0) {
     return (
-      <section className="bg-card rounded-xl shadow-sm border p-6">
+      <section className="bg-card glass-card rounded-xl shadow-sm border p-6">
         <h2 className="text-xl font-semibold text-foreground mb-6">Recent Activity</h2>
         <div className="text-center py-8">
           <p className="text-muted-foreground">No recent activity to show</p>
@@ -46,7 +46,7 @@ export function ActivityFeed() {
   }
 
   return (
-    <section className="bg-card rounded-xl shadow-sm border p-6">
+    <section className="bg-card glass-card rounded-xl shadow-sm border p-6">
       <h2 className="text-xl font-semibold text-foreground mb-6">Recent Activity</h2>
 
       <div className="space-y-6">

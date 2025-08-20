@@ -68,8 +68,8 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 px-4 py-8">
+      <Card className="w-full max-w-md glass-card rounded-2xl">
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center mb-4">
             <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">

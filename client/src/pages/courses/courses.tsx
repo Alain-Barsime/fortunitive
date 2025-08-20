@@ -31,16 +31,16 @@ export default function Courses() {
   const categories = Array.from(new Set(courses?.map((course) => course.category) || []));
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 min-h-screen">
       <Navigation />
       <div className="flex">
         <Sidebar />
         <main className="flex-1 p-6">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2 gradient-text">
               Explore Courses
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-muted-foreground">
               Discover new skills and advance your career
             </p>
           </div>
@@ -76,7 +76,7 @@ export default function Courses() {
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card key={i} className="animate-pulse">
+                <Card key={i} className="animate-pulse glass-card rounded-2xl">
                   <div className="w-full h-48 bg-muted"></div>
                   <CardContent className="p-6">
                     <div className="h-6 bg-muted rounded mb-2"></div>
@@ -94,7 +94,7 @@ export default function Courses() {
               {filteredCourses.map((course) => (
                 <Card
                   key={course.id}
-                  className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                  className="overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer glass-card bg-card floating-element"
                 >
                   <img
                     src={

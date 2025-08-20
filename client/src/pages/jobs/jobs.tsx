@@ -78,7 +78,7 @@ export default function Jobs() {
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 min-h-screen">
       <Navigation />
       
       <div className="flex">
@@ -86,10 +86,10 @@ export default function Jobs() {
         
         <main className="flex-1 p-6">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2 gradient-text">
               Job Opportunities
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-muted-foreground">
               Find your next career opportunity
             </p>
           </div>
@@ -125,7 +125,7 @@ export default function Jobs() {
           {isLoading ? (
             <div className="space-y-6">
               {[1, 2, 3, 4].map((i) => (
-                <Card key={i} className="animate-pulse">
+                <Card key={i} className="animate-pulse glass-card bg-card">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start">
@@ -145,7 +145,7 @@ export default function Jobs() {
           ) : filteredJobs && filteredJobs.length > 0 ? (
             <div className="space-y-6">
               {filteredJobs.map((job) => (
-                <Card key={job.id} className="hover:shadow-md transition-shadow">
+                <Card key={job.id} className="hover:shadow-lg transition-all duration-300 glass-card rounded-2xl floating-element">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start">

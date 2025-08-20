@@ -403,6 +403,224 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ---------------- TEST DATA SEEDING ----------------
+  app.post("/api/seed-test-messages", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const userId = req.session.userId!;
+      
+      // Create comprehensive test users with profile pictures
+      const testUsers = [
+        {
+          email: "mike.johnson@techcorp.com",
+          username: "mike_j",
+          password: "password123",
+          firstName: "Mike",
+          lastName: "Johnson",
+          role: "employer" as const,
+          bio: "Senior Hiring Manager at TechCorp. Looking for talented developers to join our team.",
+          profilePicture: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&h=100",
+        },
+        {
+          email: "sarah.anderson@university.edu", 
+          username: "dr_sarah",
+          password: "password123",
+          firstName: "Dr. Sarah",
+          lastName: "Anderson",
+          role: "instructor" as const,
+          bio: "Computer Science Professor specializing in AI and Machine Learning. 10+ years teaching experience.",
+          profilePicture: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=100&h=100",
+        },
+        {
+          email: "emily.rodriguez@gmail.com",
+          username: "emily_r", 
+          password: "password123",
+          firstName: "Emily",
+          lastName: "Rodriguez",
+          role: "learner" as const,
+          bio: "Full-stack developer passionate about React and Node.js. Always eager to learn new technologies.",
+          profilePicture: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&h=100",
+        },
+        {
+          email: "alex.chen@startup.io",
+          username: "alex_c",
+          password: "password123", 
+          firstName: "Alex",
+          lastName: "Chen",
+          role: "employer" as const,
+          bio: "CTO at innovative startup. Building the future of fintech.",
+          profilePicture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100",
+        },
+        {
+          email: "maria.garcia@freelance.com",
+          username: "maria_g",
+          password: "password123",
+          firstName: "Maria",
+          lastName: "Garcia", 
+          role: "instructor" as const,
+          bio: "UX/UI Design instructor and consultant. Helping designers create amazing user experiences.",
+          profilePicture: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=100&h=100",
+        }
+      ];
+
+      const createdUsers = [];
+      for (const userData of testUsers) {
+        let user = await storage.getUserByEmail(userData.email);
+        if (!user) {
+          const hashedPassword = await bcrypt.hash(userData.password, 12);
+          user = await storage.createUser({ ...userData, password: hashedPassword });
+        }
+        createdUsers.push(user);
+      }
+
+      // Create realistic conversation threads
+      const conversationThreads = [
+        // Conversation with Mike (Employer)
+        [
+          {
+            senderId: createdUsers[0].id,
+            recipientId: userId,
+            content: "Hi! I saw your application for the Senior React Developer position. Your portfolio looks impressive!",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[0].id,
+            content: "Thank you so much! I'm really excited about the opportunity to work at TechCorp.",
+          },
+          {
+            senderId: createdUsers[0].id,
+            recipientId: userId,
+            content: "Great! I'd love to schedule a technical interview. Are you available this Thursday at 2 PM?",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[0].id,
+            content: "Thursday at 2 PM works perfectly for me. Should I prepare anything specific?",
+          },
+          {
+            senderId: createdUsers[0].id,
+            recipientId: userId,
+            content: "Just be ready to discuss your React projects and maybe do some live coding. Looking forward to it! 🚀",
+          }
+        ],
+        
+        // Conversation with Dr. Sarah (Instructor)
+        [
+          {
+            senderId: createdUsers[1].id,
+            recipientId: userId,
+            content: "Excellent work on your Machine Learning assignment! Your approach to the neural network optimization was particularly innovative.",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[1].id,
+            content: "Thank you, Dr. Anderson! I really enjoyed working on that project. The optimization techniques you taught were game-changing.",
+          },
+          {
+            senderId: createdUsers[1].id,
+            recipientId: userId,
+            content: "I'm glad you found it valuable. Have you considered applying for our advanced AI research program?",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[1].id,
+            content: "I'd definitely be interested! Could you tell me more about the application process?",
+          }
+        ],
+
+        // Conversation with Emily (Peer Learner)
+        [
+          {
+            senderId: createdUsers[2].id,
+            recipientId: userId,
+            content: "Hey! I saw you completed the Advanced React course. How did you find the Redux section?",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[2].id,
+            content: "It was challenging but really rewarding! The state management patterns finally clicked for me.",
+          },
+          {
+            senderId: createdUsers[2].id,
+            recipientId: userId,
+            content: "That's awesome! I'm struggling with the async actions part. Any tips?",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[2].id,
+            content: "Sure! The key is understanding middleware like Redux Thunk. Want to pair program sometime?",
+          },
+          {
+            senderId: createdUsers[2].id,
+            recipientId: userId,
+            content: "That would be amazing! I'm free this weekend if you are.",
+          }
+        ],
+
+        // Conversation with Alex (Startup CTO)
+        [
+          {
+            senderId: createdUsers[3].id,
+            recipientId: userId,
+            content: "Hi there! I came across your profile and I'm impressed by your full-stack skills. We're looking for someone exactly like you!",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[3].id,
+            content: "Hi Alex! Thank you for reaching out. I'd love to learn more about the opportunity.",
+          },
+          {
+            senderId: createdUsers[3].id,
+            recipientId: userId,
+            content: "We're building a revolutionary fintech platform. Think crypto meets traditional banking. Interested in disrupting the industry? 💰",
+          }
+        ],
+
+        // Conversation with Maria (Design Instructor)
+        [
+          {
+            senderId: createdUsers[4].id,
+            recipientId: userId,
+            content: "I noticed you're taking frontend courses. Have you considered learning UX/UI design to complement your development skills?",
+          },
+          {
+            senderId: userId,
+            recipientId: createdUsers[4].id,
+            content: "Actually, yes! I've been thinking about it. Design and development seem to go hand in hand.",
+          },
+          {
+            senderId: createdUsers[4].id,
+            recipientId: userId,
+            content: "Absolutely! I'm starting a new course next month: 'Design Systems for Developers'. Perfect for someone with your background! ✨",
+          }
+        ]
+      ];
+
+      // Send all messages with realistic timing
+      let messageCount = 0;
+      for (let i = 0; i < conversationThreads.length; i++) {
+        const thread = conversationThreads[i];
+        for (let j = 0; j < thread.length; j++) {
+          const messageData = thread[j];
+          await storage.sendMessage(messageData);
+          messageCount++;
+          
+          // Add small delay to create realistic timestamps
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+      }
+
+      res.json({ 
+        message: "Exhibition messages created successfully", 
+        users: createdUsers.length, 
+        messages: messageCount,
+        conversations: conversationThreads.length 
+      });
+    } catch (error) {
+      console.error("Seed error:", error);
+      res.status(500).json({ message: "Failed to seed test messages", error });
+    }
+  });
+
   // ---------------- HTTP SERVER ----------------
   return createServer(app);
 }
