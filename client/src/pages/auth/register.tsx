@@ -52,7 +52,7 @@ export default function Register() {
       const { confirmPassword, ...userData } = data;
       await register(userData);
       toast({
-        title: "Welcome to SkillConnect!",
+        title: "Welcome to Fortunitive!",
         description: `Account created successfully!`,
       });
       setLocation("/");
@@ -76,7 +76,7 @@ export default function Register() {
               <i className="fas fa-graduation-cap text-white text-lg"></i>
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Join SkillConnect</CardTitle>
+          <CardTitle className="text-2xl font-bold">Join Fortunitive</CardTitle>
           <p className="text-gray-600 dark:text-gray-400">Create your account to get started</p>
         </CardHeader>
         <CardContent>

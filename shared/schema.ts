@@ -28,7 +28,7 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-// User followers/following
+// User follows
 export const userFollows = pgTable("user_follows", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   followerId: varchar("follower_id").references(() => users.id).notNull(),
@@ -48,6 +48,7 @@ export const courses = pgTable("courses", {
   duration: integer("duration").notNull(), // in minutes
   rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"),
   totalStudents: integer("total_students").default(0),
+  course_link: text("course_link"), // new column
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -57,7 +58,7 @@ export const courseEnrollments = pgTable("course_enrollments", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   courseId: varchar("course_id").references(() => courses.id).notNull(),
   studentId: varchar("student_id").references(() => users.id).notNull(),
-  progress: integer("progress").default(0), // percentage
+  progress: integer("progress").default(0),
   completedAt: timestamp("completed_at"),
   certificateUrl: text("certificate_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -145,7 +146,7 @@ export const transactions = pgTable("transactions", {
   type: transactionTypeEnum("type").notNull(),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   description: text("description").notNull(),
-  relatedId: varchar("related_id"), // course_id, job_id, etc.
+  relatedId: varchar("related_id"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -165,90 +166,38 @@ export const usersRelations = relations(users, ({ many }) => ({
 }));
 
 export const coursesRelations = relations(courses, ({ one, many }) => ({
-  instructor: one(users, {
-    fields: [courses.instructorId],
-    references: [users.id],
-  }),
+  instructor: one(users, { fields: [courses.instructorId], references: [users.id] }),
   enrollments: many(courseEnrollments),
   reviews: many(courseReviews),
 }));
 
 export const courseEnrollmentsRelations = relations(courseEnrollments, ({ one }) => ({
-  course: one(courses, {
-    fields: [courseEnrollments.courseId],
-    references: [courses.id],
-  }),
-  student: one(users, {
-    fields: [courseEnrollments.studentId],
-    references: [users.id],
-  }),
+  course: one(courses, { fields: [courseEnrollments.courseId], references: [courses.id] }),
+  student: one(users, { fields: [courseEnrollments.studentId], references: [users.id] }),
 }));
 
 export const jobsRelations = relations(jobs, ({ one, many }) => ({
-  employer: one(users, {
-    fields: [jobs.employerId],
-    references: [users.id],
-  }),
+  employer: one(users, { fields: [jobs.employerId], references: [users.id] }),
   applications: many(jobApplications),
 }));
 
 export const postsRelations = relations(posts, ({ one, many }) => ({
-  author: one(users, {
-    fields: [posts.authorId],
-    references: [users.id],
-  }),
+  author: one(users, { fields: [posts.authorId], references: [users.id] }),
   likes: many(postLikes),
   comments: many(postComments),
 }));
 
 export const messagesRelations = relations(messages, ({ one }) => ({
-  sender: one(users, {
-    fields: [messages.senderId],
-    references: [users.id],
-    relationName: "sender",
-  }),
-  recipient: one(users, {
-    fields: [messages.recipientId],
-    references: [users.id],
-    relationName: "recipient",
-  }),
+  sender: one(users, { fields: [messages.senderId], references: [users.id], relationName: "sender" }),
+  recipient: one(users, { fields: [messages.recipientId], references: [users.id], relationName: "recipient" }),
 }));
 
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  walletBalance: true,
-});
-
-export const insertCourseSchema = createInsertSchema(courses).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  rating: true,
-  totalStudents: true,
-});
-
-export const insertJobSchema = createInsertSchema(jobs).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertPostSchema = createInsertSchema(posts).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  likesCount: true,
-  commentsCount: true,
-});
-
-export const insertMessageSchema = createInsertSchema(messages).omit({
-  id: true,
-  createdAt: true,
-  isRead: true,
-});
+export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true, updatedAt: true, walletBalance: true });
+export const insertCourseSchema = createInsertSchema(courses).omit({ id: true, createdAt: true, updatedAt: true, rating: true, totalStudents: true });
+export const insertJobSchema = createInsertSchema(jobs).omit({ id: true, createdAt: true, updatedAt: true });
+export const insertPostSchema = createInsertSchema(posts).omit({ id: true, createdAt: true, updatedAt: true, likesCount: true, commentsCount: true });
+export const insertMessageSchema = createInsertSchema(messages).omit({ id: true, createdAt: true, isRead: true });
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;

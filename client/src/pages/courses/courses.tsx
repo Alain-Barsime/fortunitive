@@ -13,27 +13,28 @@ import type { Course } from "@shared/schema";
 export default function Courses() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [activeVideo, setActiveVideo] = useState<string | null>(null); // store course_link of video
 
   const { data: courses, isLoading } = useQuery<Course[]>({
     queryKey: ["/api/courses"],
   });
 
   const filteredCourses = courses?.filter((course) => {
-    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         course.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !selectedCategory || selectedCategory === "all" || course.category === selectedCategory;
+    const matchesSearch =
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      !selectedCategory || selectedCategory === "all" || course.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const categories = Array.from(new Set(courses?.map(course => course.category) || []));
+  const categories = Array.from(new Set(courses?.map((course) => course.category) || []));
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <Navigation />
-      
       <div className="flex">
         <Sidebar />
-        
         <main className="flex-1 p-6">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -91,10 +92,15 @@ export default function Courses() {
           ) : filteredCourses && filteredCourses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCourses.map((course) => (
-                <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                      onClick={() => window.location.href = `/courses/${course.id}`}>
+                <Card
+                  key={course.id}
+                  className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                >
                   <img
-                    src={course.thumbnail || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&h=240"}
+                    src={
+                      course.thumbnail ||
+                      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&h=240"
+                    }
                     alt={course.title}
                     className="w-full h-48 object-cover"
                   />
@@ -107,11 +113,9 @@ export default function Courses() {
                         {course.category}
                       </Badge>
                     </div>
-                    
                     <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
                       {course.description}
                     </p>
-
                     <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 mr-1" />
@@ -122,7 +126,6 @@ export default function Courses() {
                         {course.totalStudents || 0} students
                       </div>
                     </div>
-
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <Star className="h-4 w-4 text-yellow-400 fill-current" />
@@ -131,17 +134,15 @@ export default function Courses() {
                         </span>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-primary">
-                          ${course.price}
-                        </p>
+                        <p className="text-2xl font-bold text-primary">${course.price}</p>
                       </div>
                     </div>
 
-                    <Button 
+                    <Button
                       className="w-full mt-4"
                       onClick={(e) => {
                         e.stopPropagation();
-                        window.location.href = `/courses/${course.id}`;
+                        setActiveVideo(course.course_link); // open video modal
                       }}
                     >
                       View Course
@@ -168,6 +169,26 @@ export default function Courses() {
           )}
         </main>
       </div>
+
+      {/* ---------------- VIDEO MODAL ---------------- */}
+      {activeVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="relative w-full max-w-4xl mx-4">
+            <video
+              src={activeVideo}
+              controls
+              autoPlay
+              className="w-full h-auto rounded shadow-lg"
+            />
+            <button
+              className="absolute top-2 right-2 text-2xl"
+              onClick={() => setActiveVideo(null)}
+            >
+              ❌
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

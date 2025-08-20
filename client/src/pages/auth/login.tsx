@@ -44,7 +44,7 @@ export default function Login() {
       await login(data.email, data.password);
       toast({
         title: "Welcome back!",
-        description: "Successfully logged in to SkillConnect",
+        description: "Successfully logged in to Fortunitive",
       });
       setLocation("/");
     } catch (error: any) {
@@ -67,7 +67,7 @@ export default function Login() {
               <i className="fas fa-graduation-cap text-white text-lg"></i>
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Welcome to SkillConnect</CardTitle>
+          <CardTitle className="text-2xl font-bold">Welcome to Fortunitive</CardTitle>
           <p className="text-muted-foreground">Sign in to your account</p>
         </CardHeader>
         <CardContent>

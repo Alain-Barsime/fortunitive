@@ -32,6 +32,7 @@ export default function Jobs() {
       const response = await apiRequest("POST", `/api/jobs/${jobId}/apply`, { coverLetter });
       return response.json();
     },
+    
     onSuccess: () => {
       toast({
         title: "Application submitted!",
@@ -218,46 +219,49 @@ export default function Jobs() {
                           <Button onClick={() => handleApply(job.id)}>
                             Apply Now
                           </Button>
+
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Apply for {job.title}</DialogTitle>
-                          </DialogHeader>
-                          <div className="space-y-4">
-                            <div>
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                Company: {job.company}
-                              </p>
-                              <p className="text-sm text-gray-600 dark:text-gray-400">
-                                Location: {job.location}
-                              </p>
-                            </div>
-                            
-                            <div>
-                              <label className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                Cover Letter
-                              </label>
-                              <Textarea
-                                placeholder="Tell the employer why you're the right fit for this position..."
-                                value={coverLetter}
-                                onChange={(e) => setCoverLetter(e.target.value)}
-                                className="mt-1"
-                                rows={4}
-                              />
-                            </div>
-                            
-                            <div className="flex gap-2">
-                              <Button
-                                onClick={submitApplication}
-                                disabled={!coverLetter.trim() || applyMutation.isPending}
-                                className="flex-1"
-                              >
-                                {applyMutation.isPending ? "Submitting..." : "Submit Application"}
-                              </Button>
-                            </div>
+                       <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+                        <DialogHeader>
+                          <DialogTitle>Apply for {job.title}</DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                              Company: {job.company}
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              Location: {job.location}
+                            </p>
                           </div>
-                        </DialogContent>
+                          
+                          <div>
+                            <label className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                              Cover Letter
+                            </label>
+                            <Textarea
+                              placeholder="Tell the employer why you're the right fit for this position..."
+                              value={coverLetter}
+                              onChange={(e) => setCoverLetter(e.target.value)}
+                              className="mt-1"
+                              rows={4}
+                            />
+                          </div>
+                          
+                          <div className="flex gap-2">
+                            <Button
+                              onClick={submitApplication}
+                              disabled={!coverLetter.trim() || applyMutation.isPending}
+                              className="flex-1"
+                            >
+                              {applyMutation.isPending ? "Submitting..." : "Submit Application"}
+                            </Button>
+                          </div>
+                        </div>
+                      </DialogContent>
+
                       </Dialog>
+
                     </div>
                   </CardContent>
                 </Card>

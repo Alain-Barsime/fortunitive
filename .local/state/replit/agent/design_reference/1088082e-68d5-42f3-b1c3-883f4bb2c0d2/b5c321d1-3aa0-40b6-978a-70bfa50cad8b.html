@@ -1,0 +1,620 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillConnect - Learn, Connect, Grow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0066CC',
+                        secondary: '#2D3748',
+                        accent: '#38A169',
+                        warning: '#ED8936'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+    <!-- @COMPONENT: TopNavigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-graduation-cap text-white text-sm"></i>
+                            </div>
+                            <span class="ml-2 text-xl font-bold text-primary">SkillConnect</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="hidden md:block flex-1 max-w-lg mx-8">
+                    <div class="relative">
+                        <input type="text" placeholder="Search courses, jobs, people..." 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Navigation Icons -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -mt-6 ml-2 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-envelope text-lg"></i>
+                    </button>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-moon dark:hidden text-lg"></i>
+                        <i class="fas fa-sun hidden dark:inline text-lg"></i>
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <!-- A professional headshot of a young adult with a friendly smile -->
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                             alt="Profile" class="w-8 h-8 rounded-full cursor-pointer border-2 border-transparent hover:border-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: TopNavigation -->
+
+    <div class="flex">
+        <!-- @COMPONENT: Sidebar -->
+        <aside class="hidden lg:block w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen">
+            <div class="p-6">
+                <!-- User Profile Quick View -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <!-- Same professional headshot as in navigation -->
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                             alt="Profile" class="w-12 h-12 rounded-full">
+                        <div class="ml-3">
+                            <p class="font-semibold" data-bind="user.name">Alex Johnson</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400" data-bind="user.role">Full Stack Developer</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                        <div class="flex items-center justify-between text-sm">
+                            <span>Wallet Balance</span>
+                            <span class="font-semibold text-accent" data-bind="user.balance">$1,250.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu -->
+                <nav class="space-y-2">
+                    <a href="#" class="flex items-center px-3 py-2 text-primary bg-blue-50 dark:bg-blue-900/20 rounded-lg font-medium">
+                        <i class="fas fa-home w-5"></i>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-graduation-cap w-5"></i>
+                        <span class="ml-3">My Learning</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-briefcase w-5"></i>
+                        <span class="ml-3">Jobs</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-users w-5"></i>
+                        <span class="ml-3">Network</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-newspaper w-5"></i>
+                        <span class="ml-3">Feed</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-comment-alt w-5"></i>
+                        <span class="ml-3">Messages</span>
+                    </a>
+                    <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-wallet w-5"></i>
+                        <span class="ml-3">Wallet</span>
+                    </a>
+                </nav>
+
+                <!-- Quick Actions -->
+                <div class="mt-8">
+                    <h4 class="font-medium text-gray-900 dark:text-gray-100 mb-3">Quick Actions</h4>
+                    <div class="space-y-2">
+                        <button class="w-full text-left px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                            <i class="fas fa-plus w-4 mr-2"></i>Create Course
+                        </button>
+                        <button class="w-full text-left px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                            <i class="fas fa-briefcase w-4 mr-2"></i>Post Job
+                        </button>
+                        <button class="w-full text-left px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                            <i class="fas fa-edit w-4 mr-2"></i>Create Post
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- @END_COMPONENT: Sidebar -->
+
+        <!-- @COMPONENT: MainContent -->
+        <main class="flex-1 p-6">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Welcome back, Alex!</h1>
+                <p class="text-gray-600 dark:text-gray-400">Continue your learning journey and explore new opportunities.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-book-open text-primary text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100" data-bind="stats.courses">12</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Courses Enrolled</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-certificate text-accent text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100" data-bind="stats.certificates">8</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Certificates Earned</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-briefcase text-warning text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100" data-bind="stats.applications">24</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Job Applications</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-purple-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100" data-bind="stats.connections">342</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Connections</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Continue Learning Section -->
+                    <section class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">Continue Learning</h2>
+                            <a href="#" class="text-primary hover:text-blue-800 text-sm font-medium">View All</a>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- @MAP: userCourses.map(course => ( -->
+                            <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                <!-- Course thumbnail showing code on a computer screen -->
+                                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                     alt="React Development Course" class="w-16 h-16 rounded-lg object-cover">
+                                <div class="flex-1 ml-4">
+                                    <h3 class="font-medium text-gray-900 dark:text-gray-100" data-bind="course.title">React Development Masterclass</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400" data-bind="course.instructor">by Sarah Johnson</p>
+                                    <div class="mt-2">
+                                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                            <div class="bg-primary h-2 rounded-full" style="width: 65%" data-bind="course.progress"></div>
+                                        </div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">65% Complete</p>
+                                    </div>
+                                </div>
+                                <button class="ml-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    Continue
+                                </button>
+                            </div>
+
+                            <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                <!-- Data visualization dashboard with charts and graphs -->
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                     alt="Data Science Course" class="w-16 h-16 rounded-lg object-cover">
+                                <div class="flex-1 ml-4">
+                                    <h3 class="font-medium text-gray-900 dark:text-gray-100" data-bind="course.title">Data Science Fundamentals</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400" data-bind="course.instructor">by Dr. Michael Chen</p>
+                                    <div class="mt-2">
+                                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                            <div class="bg-primary h-2 rounded-full" style="width: 40%" data-bind="course.progress"></div>
+                                        </div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">40% Complete</p>
+                                    </div>
+                                </div>
+                                <button class="ml-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    Continue
+                                </button>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </section>
+
+                    <!-- Recommended Jobs Section -->
+                    <section class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">Recommended Jobs</h2>
+                            <a href="#" class="text-primary hover:text-blue-800 text-sm font-medium">View All</a>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- @MAP: recommendedJobs.map(job => ( -->
+                            <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:border-primary hover:shadow-md transition-all">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start">
+                                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-building text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900 dark:text-gray-100" data-bind="job.title">Senior React Developer</h3>
+                                            <p class="text-gray-600 dark:text-gray-400" data-bind="job.company">TechCorp Solutions</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400" data-bind="job.location">San Francisco, CA (Remote)</p>
+                                            <div class="flex items-center mt-2 space-x-4">
+                                                <span class="text-sm font-medium text-accent" data-bind="job.salary">$120k - $150k</span>
+                                                <span class="text-xs bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 px-2 py-1 rounded">Full-time</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                        Apply
+                                    </button>
+                                </div>
+                                <div class="mt-3 flex flex-wrap gap-2">
+                                    <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">React</span>
+                                    <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">Node.js</span>
+                                    <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">TypeScript</span>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:border-primary hover:shadow-md transition-all">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start">
+                                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-chart-line text-accent"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900 dark:text-gray-100" data-bind="job.title">Data Scientist</h3>
+                                            <p class="text-gray-600 dark:text-gray-400" data-bind="job.company">DataFlow Analytics</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400" data-bind="job.location">New York, NY</p>
+                                            <div class="flex items-center mt-2 space-x-4">
+                                                <span class="text-sm font-medium text-accent" data-bind="job.salary">$110k - $140k</span>
+                                                <span class="text-xs bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 px-2 py-1 rounded">Contract</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                        Apply
+                                    </button>
+                                </div>
+                                <div class="mt-3 flex flex-wrap gap-2">
+                                    <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">Python</span>
+                                    <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">Machine Learning</span>
+                                    <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">SQL</span>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </section>
+
+                    <!-- Recent Activity Feed -->
+                    <section class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Recent Activity</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- @MAP: activityFeed.map(activity => ( -->
+                            <div class="flex items-start space-x-3">
+                                <!-- A smiling woman in professional attire -->
+                                <img src="https://pixabay.com/get/gd23a46dbde32616f68319a3f20adaf83efc1e20df659ae74d4a889941edf105781670bd6dcd32b31ee3c41e95037ab7d711d458895dc1f37ac908b3c31b9bfe3_1280.jpg" 
+                                     alt="User avatar" class="w-10 h-10 rounded-full">
+                                <div class="flex-1">
+                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="font-medium text-gray-900 dark:text-gray-100" data-bind="activity.user">Emily Rodriguez</span>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400" data-bind="activity.time">2 hours ago</span>
+                                        </div>
+                                        <p class="text-gray-700 dark:text-gray-300" data-bind="activity.content">Just completed the "Advanced JavaScript Patterns" course! 🎉 The async/await module was particularly insightful. Highly recommend it to fellow developers!</p>
+                                        <div class="flex items-center mt-3 space-x-4">
+                                            <button class="flex items-center text-gray-500 dark:text-gray-400 hover:text-primary">
+                                                <i class="far fa-heart mr-1"></i>
+                                                <span class="text-sm">24</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-500 dark:text-gray-400 hover:text-primary">
+                                                <i class="far fa-comment mr-1"></i>
+                                                <span class="text-sm">8</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-500 dark:text-gray-400 hover:text-primary">
+                                                <i class="far fa-share mr-1"></i>
+                                                <span class="text-sm">Share</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <!-- A professional-looking man with glasses -->
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                     alt="User avatar" class="w-10 h-10 rounded-full">
+                                <div class="flex-1">
+                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="font-medium text-gray-900 dark:text-gray-100" data-bind="activity.user">Mark Thompson</span>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400" data-bind="activity.time">4 hours ago</span>
+                                        </div>
+                                        <p class="text-gray-700 dark:text-gray-300" data-bind="activity.content">Excited to announce that our startup is hiring! Looking for talented React developers to join our team. Check out the job posting in the Jobs section. #hiring #react</p>
+                                        <div class="flex items-center mt-3 space-x-4">
+                                            <button class="flex items-center text-gray-500 dark:text-gray-400 hover:text-primary">
+                                                <i class="far fa-heart mr-1"></i>
+                                                <span class="text-sm">15</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-500 dark:text-gray-400 hover:text-primary">
+                                                <i class="far fa-comment mr-1"></i>
+                                                <span class="text-sm">12</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-500 dark:text-gray-400 hover:text-primary">
+                                                <i class="far fa-share mr-1"></i>
+                                                <span class="text-sm">Share</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-8">
+                    <!-- Featured Courses -->
+                    <section class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Featured Courses</h2>
+                            <a href="#" class="text-primary hover:text-blue-800 text-sm">View All</a>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- @MAP: featuredCourses.map(course => ( -->
+                            <div class="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                                <!-- Modern web development workspace with multiple monitors -->
+                                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=160" 
+                                     alt="Web Development Course" class="w-full h-32 object-cover">
+                                <div class="p-4">
+                                    <h3 class="font-medium text-gray-900 dark:text-gray-100 mb-1" data-bind="course.title">Full Stack Web Development</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-bind="course.instructor">by Alex Turner</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-lg font-bold text-primary" data-bind="course.price">$89</span>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                            <span class="text-sm text-gray-600 dark:text-gray-400 ml-1" data-bind="course.rating">4.8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                                <!-- AI and machine learning visualization with neural networks -->
+                                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=160" 
+                                     alt="AI and Machine Learning Course" class="w-full h-32 object-cover">
+                                <div class="p-4">
+                                    <h3 class="font-medium text-gray-900 dark:text-gray-100 mb-1" data-bind="course.title">AI & Machine Learning</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-bind="course.instructor">by Dr. Lisa Chen</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-lg font-bold text-primary" data-bind="course.price">$129</span>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                            <span class="text-sm text-gray-600 dark:text-gray-400 ml-1" data-bind="course.rating">4.9</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </section>
+
+                    <!-- Network Suggestions -->
+                    <section class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">People You May Know</h2>
+                            <a href="#" class="text-primary hover:text-blue-800 text-sm">See All</a>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- @MAP: networkSuggestions.map(person => ( -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <!-- A confident businesswoman in professional attire -->
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                         alt="Network suggestion" class="w-10 h-10 rounded-full">
+                                    <div class="ml-3">
+                                        <p class="font-medium text-gray-900 dark:text-gray-100" data-bind="person.name">Sarah Wilson</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400" data-bind="person.title">UX Designer at Google</p>
+                                    </div>
+                                </div>
+                                <button class="px-3 py-1 text-sm bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    Connect
+                                </button>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <!-- A young professional man with a friendly smile -->
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                         alt="Network suggestion" class="w-10 h-10 rounded-full">
+                                    <div class="ml-3">
+                                        <p class="font-medium text-gray-900 dark:text-gray-100" data-bind="person.name">David Kim</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400" data-bind="person.title">Product Manager at Meta</p>
+                                    </div>
+                                </div>
+                                <button class="px-3 py-1 text-sm bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    Connect
+                                </button>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <!-- A professional woman with glasses and business attire -->
+                                    <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                         alt="Network suggestion" class="w-10 h-10 rounded-full">
+                                    <div class="ml-3">
+                                        <p class="font-medium text-gray-900 dark:text-gray-100" data-bind="person.name">Jennifer Brown</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400" data-bind="person.title">Data Scientist at Netflix</p>
+                                    </div>
+                                </div>
+                                <button class="px-3 py-1 text-sm bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    Connect
+                                </button>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </section>
+
+                    <!-- Quick Messages -->
+                    <section class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Messages</h2>
+                            <a href="#" class="text-primary hover:text-blue-800 text-sm">View All</a>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <!-- @MAP: recentMessages.map(message => ( -->
+                            <div class="flex items-center p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer">
+                                <!-- A friendly recruiter with professional headshot -->
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                     alt="Message sender" class="w-10 h-10 rounded-full">
+                                <div class="ml-3 flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <p class="font-medium text-gray-900 dark:text-gray-100 text-sm" data-bind="message.sender">Mike Johnson</p>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400" data-bind="message.time">2m</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 truncate" data-bind="message.preview">Thanks for applying! I'd like to schedule...</p>
+                                </div>
+                                <div class="w-2 h-2 bg-primary rounded-full ml-2"></div>
+                            </div>
+
+                            <div class="flex items-center p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer">
+                                <!-- A course instructor with warm smile -->
+                                <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                     alt="Message sender" class="w-10 h-10 rounded-full">
+                                <div class="ml-3 flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <p class="font-medium text-gray-900 dark:text-gray-100 text-sm" data-bind="message.sender">Dr. Anderson</p>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400" data-bind="message.time">1h</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 truncate" data-bind="message.preview">Great work on your assignment! Your...</p>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+        <!-- @END_COMPONENT: MainContent -->
+    </div>
+
+    <!-- @COMPONENT: FloatingActionButton -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <button class="w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+            <i class="fas fa-plus text-xl"></i>
+        </button>
+    </div>
+    <!-- @END_COMPONENT: FloatingActionButton -->
+
+    <!-- Mobile Navigation (Hidden on Desktop) -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50">
+        <div class="flex justify-around py-2">
+            <a href="#" class="flex flex-col items-center py-2 px-3 text-primary">
+                <i class="fas fa-home text-lg"></i>
+                <span class="text-xs mt-1">Home</span>
+            </a>
+            <a href="#" class="flex flex-col items-center py-2 px-3 text-gray-600 dark:text-gray-400">
+                <i class="fas fa-graduation-cap text-lg"></i>
+                <span class="text-xs mt-1">Learn</span>
+            </a>
+            <a href="#" class="flex flex-col items-center py-2 px-3 text-gray-600 dark:text-gray-400">
+                <i class="fas fa-briefcase text-lg"></i>
+                <span class="text-xs mt-1">Jobs</span>
+            </a>
+            <a href="#" class="flex flex-col items-center py-2 px-3 text-gray-600 dark:text-gray-400">
+                <i class="fas fa-users text-lg"></i>
+                <span class="text-xs mt-1">Network</span>
+            </a>
+            <a href="#" class="flex flex-col items-center py-2 px-3 text-gray-600 dark:text-gray-400">
+                <i class="fas fa-user text-lg"></i>
+                <span class="text-xs mt-1">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Dark Mode Toggle Functionality
+        (function() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const html = document.documentElement;
+            
+            // Check for saved theme preference or default to light mode
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            
+            if (currentTheme === 'dark') {
+                html.classList.add('dark');
+            }
+            
+            darkModeToggle.addEventListener('click', function() {
+                html.classList.toggle('dark');
+                
+                // Save theme preference
+                const theme = html.classList.contains('dark') ? 'dark' : 'light';
+                localStorage.setItem('theme', theme);
+            });
+        })();
+
+        // TODO: Implement real-time notifications using WebSocket connections
+        // TODO: Add form validation for course creation and job applications
+        // TODO: Implement secure payment processing with Stripe integration
+        // TODO: Add file upload functionality for resume and course materials
+        // TODO: Implement search functionality across all content types
+        // TODO: Add proper error handling and loading states
+        // TODO: Implement user authentication and session management
+        // TODO: Add API integration for all CRUD operations
+        // TODO: Implement real-time messaging system
+        // TODO: Add push notification support for mobile
+    </script>
+</body>
+</html>

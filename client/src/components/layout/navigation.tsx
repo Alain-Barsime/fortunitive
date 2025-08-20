@@ -20,7 +20,7 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-background shadow-sm border-b border-border sticky top-0 z-50">
+    <nav className="bg-white shadow-sm border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -30,7 +30,7 @@ export function Navigation() {
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <i className="fas fa-graduation-cap text-white text-sm"></i>
                 </div>
-                <span className="ml-2 text-xl font-bold text-primary">SkillConnect</span>
+                <span className="ml-2 text-xl font-bold text-primary">Fortunitive</span>
               </div>
             </Link>
           </div>
