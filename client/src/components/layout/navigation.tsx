@@ -17,6 +17,7 @@ const searchSuggestions = [
   { id: "messages", title: "Messages", type: "page", href: "/messages" },
   { id: "profile", title: "Profile", type: "page", href: "/profile" },
   { id: "wallet", title: "Wallet", type: "page", href: "/wallet" },
+  { id: "career-copilot", title: "Career Copilot", type: "page", href: "/career-copilot" },
   { id: "ai-courses", title: "AI Courses", type: "search", href: "/courses?category=ai" },
   { id: "machine-learning", title: "Machine Learning", type: "search", href: "/courses?q=machine+learning" },
   { id: "data-science", title: "Data Science Jobs", type: "search", href: "/jobs?q=data+science" },
@@ -106,12 +107,14 @@ export function Navigation() {
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center cursor-pointer group">
-                <div className="w-10 h-10 glass rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">F</span>
+                {/* Brandmark Logo */}
+                <div className="relative w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl transform rotate-12 group-hover:rotate-0 transition-transform duration-300 shadow-lg"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl transform -rotate-6 group-hover:rotate-0 transition-transform duration-300 shadow-lg"></div>
+                  <div className="relative w-8 h-8 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center z-10">
+                    <span className="text-primary text-lg font-extrabold">F</span>
                   </div>
                 </div>
-                <span className="ml-3 text-xl font-bold gradient-text">Fortunitive</span>
               </div>
             </Link>
           </div>
@@ -188,11 +191,38 @@ export function Navigation() {
               variant="ghost"
               size="sm"
               className="glass-button p-3 rounded-xl hover:scale-110 transition-all duration-300 relative"
+              asChild
             >
-              <MessageCircle className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs">2</span>
-              </span>
+              <Link href="/messages">
+                <MessageCircle className="h-5 w-5" />
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs">2</span>
+                </span>
+              </Link>
+            </Button>
+
+            {/* Wallet Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="glass-button p-3 rounded-xl hover:scale-110 transition-all duration-300"
+              asChild
+            >
+              <Link href="/wallet">
+                <img src="/path/to/your/wallet-icon.svg" alt="Wallet" className="h-5 w-5" /> {/* Placeholder for wallet icon */}
+              </Link>
+            </Button>
+
+            {/* Career Copilot Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="glass-button p-3 rounded-xl hover:scale-110 transition-all duration-300"
+              asChild
+            >
+              <Link href="/career-copilot">
+                <img src="/path/to/your/chatbot-icon.svg" alt="Career Copilot" className="h-5 w-5" /> {/* Placeholder for chatbot icon */}
+              </Link>
             </Button>
 
             {/* Dark Mode Toggle */}

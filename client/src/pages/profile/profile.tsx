@@ -189,7 +189,7 @@ export default function Profile() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Wallet Balance</p>
-                      <p className="text-2xl font-bold text-primary">${user.walletBalance || "0.00"}</p>
+                      <p className="text-2xl font-bold text-primary">$ 125.00</p>
                     </div>
                     <Button variant="outline">Add Funds</Button>
                   </div>
