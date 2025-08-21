@@ -22,6 +22,7 @@ const navigation = [
   { name: "Jobs", href: "/jobs", icon: Briefcase },
   { name: "Messages", href: "/messages", icon: MessageCircle },
   { name: "Wallet", href: "/wallet", icon: Wallet },
+  {name: "Career Copilot", href: "/career-copilot", icon: TrendingUp}
 ];
 
 const quickActions = [
